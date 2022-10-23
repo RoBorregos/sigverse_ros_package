@@ -352,11 +352,11 @@ void * SIGVerseROSBridge::receivingThread(void *param)
 			for(auto itr = tfArrayView.cbegin(); itr != tfArrayView.cend(); ++itr)
 			{
 				ros::Time timestamp;
-
-				std::string frameId      = (*itr)["header"]["frame_id"].get_utf8().value.to_string();
+				std::string tfPrefix     = "simulated/";
+				std::string frameId      = tfPrefix + ((*itr)["header"]["frame_id"].get_utf8().value.to_string());
 				timestamp.sec            = (*itr)["header"]["stamp"]["secs"] .get_int32();
 				timestamp.nsec           = (*itr)["header"]["stamp"]["nsecs"].get_int32();
-				std::string childFrameId = (*itr)["child_frame_id"]    .get_utf8().value.to_string();
+				std::string childFrameId = tfPrefix + ((*itr)["child_frame_id"]    .get_utf8().value.to_string());
 
 				if(timestamp.sec == 0)
 				{
